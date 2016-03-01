@@ -26,12 +26,18 @@
 		results 			: false,
 		rss 				: "/rss",
 		onKeyUp 			: false,
-		result_template 	: "<a href='{{link}}'><p><h2>{{title}}</h2><h4>{{pubDate}}</h4></p></a>",
+		result_template 	: "<a href='{{link}}'><p><h2>{{title}}</h2><h4>{{prettyPubDate}}</h4></p></a>",
 		info_template		: "<p>Number of posts found: {{amount}}</p>",
 		displaySearchInfo 	: true,
 		zeroResultsInfo		: true,
 		before 				: false,
 		onComplete 			: false
+	};
+
+	var prettyDate = function(date) {
+		var d = new Date(date);
+		var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+			return d.getDate() + ' ' + monthNames[d.getMonth()] + ' ' + d.getFullYear();
 	};
 
 	var pluginMethods 	= {
@@ -107,6 +113,7 @@
 						pubDate 	: post.find('pubDate').text(),
 						link 		: post.find('link').text()
 					};
+					parsedData.prettyPubDate = prettyDate(parsedData.pubDate);
 
 				    index.add(parsedData);
 				    blogData.push(parsedData);
